@@ -4,11 +4,52 @@ project(project4_04)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
 
-add_library(RBF codebase/rbf/pfm.cc codebase/rbf/rbfm.cc)
-add_library(RM codebase/rm/rm.cc)
+add_library(RBF rbf/pfm.cc rbf/rbfm.cc)
 
-add_executable(cs222_rbftest01 codebase/rbf/rbftest1.cc)
-target_link_libraries(cs222_rbftest01 RBF)
+add_executable(cs222_rbftest1 rbf/rbftest1.cc)
+target_link_libraries(cs222_rbftest1 RBF)
+
+add_executable(cs222_rbftest2 rbf/rbftest2.cc)
+target_link_libraries(cs222_rbftest2 RBF)
+
+add_executable(cs222_rbftest3 rbf/rbftest3.cc)
+target_link_libraries(cs222_rbftest3 RBF)
+
+add_executable(cs222_rbftest4 rbf/rbftest4.cc)
+target_link_libraries(cs222_rbftest4 RBF)
+
+add_executable(cs222_rbftest5 rbf/rbftest5.cc)
+target_link_libraries(cs222_rbftest5 RBF)
+
+add_executable(cs222_rbftest6 rbf/rbftest6.cc)
+target_link_libraries(cs222_rbftest6 RBF)
+
+add_executable(cs222_rbftest8 rbf/rbftest8.cc)
+target_link_libraries(cs222_rbftest8 RBF)
+
+add_executable(cs222_rbftest7 rbf/rbftest7.cc)
+target_link_libraries(cs222_rbftest7 RBF)
+
+add_executable(cs222_rbftest8b rbf/rbftest8b.cc)
+target_link_libraries(cs222_rbftest8b RBF)
+
+add_executable(cs222_rbftest9 rbf/rbftest9.cc)
+target_link_libraries(cs222_rbftest9 RBF)
+
+add_executable(cs222_rbftest10 rbf/rbftest10.cc)
+target_link_libraries(cs222_rbftest10 RBF)
+
+add_executable(cs222_rbftest11 rbf/rbftest11.cc)
+target_link_libraries(cs222_rbftest10 RBF)
+
+add_executable(cs222_rbftest12 rbf/rbftest12.cc)
+target_link_libraries(cs222_rbftest10 RBF)
+
+add_executable(mytest rbf/MyTest.cc)
+target_link_libraries(mytest RBF)
+
+
+
 
 #
 #set(SOURCE_FILES

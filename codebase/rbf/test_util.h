@@ -24,15 +24,6 @@ bool FileExists(string &fileName)
     if(stat(fileName.c_str(), &stFileInfo) == 0) return true;
     else return false;
 }
-
-
-// Calculate actual bytes for nulls-indicator for the given field counts
-int getActualByteForNullsIndicator(int fieldCount) {
-
-    return ceil((double) fieldCount / CHAR_BIT);
-}
-
-
 // After createFile() check
 int createFileShouldSucceed(string &fileName) 
 {
@@ -48,6 +39,12 @@ int createFileShouldSucceed(string &fileName)
         return -1;
     }
 }
+
+// Calculate actual bytes for nulls-indicator for the given field counts
+int getActualByteForNullsIndicator(int fieldCount) {
+    return ceil((double) fieldCount / CHAR_BIT);
+}
+
 
 // After destroyFile() check
 int destroyFileShouldSucceed(string &fileName) 

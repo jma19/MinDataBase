@@ -5,22 +5,30 @@ typedef unsigned PageNum;
 typedef int RC;
 typedef char byte;
 
+#define FAIL -1
+#define SUCCESS 0
+
+#define PAGE_NUMBER_TOO_LARGE -3
+#define FSEEK_FAIL -4
+#define FWRITE_FAIL -5
+#define FREAD_FAIL -6
 #define PAGE_SIZE 4096
+
 #include <string>
 #include <climits>
+
 using namespace std;
 
 class FileHandle;
 
-class PagedFileManager
-{
+class PagedFileManager {
 public:
-    static PagedFileManager* instance();                                  // Access to the _pf_manager instance
+    static PagedFileManager *instance();                                  // Access to the _pf_manager instance
 
-    RC createFile    (const string &fileName);                            // Create a new file
-    RC destroyFile   (const string &fileName);                            // Destroy a file
-    RC openFile      (const string &fileName, FileHandle &fileHandle);    // Open a file
-    RC closeFile     (FileHandle &fileHandle);                            // Close a file
+    RC createFile(const string &fileName);                            // Create a new file
+    RC destroyFile(const string &fileName);                            // Destroy a file
+    RC openFile(const string &fileName, FileHandle &fileHandle);    // Open a file
+    RC closeFile(FileHandle &fileHandle);                            // Close a file
 
 protected:
     PagedFileManager();                                                   // Constructor
@@ -31,14 +39,13 @@ private:
 };
 
 
-class FileHandle
-{
+class FileHandle {
 public:
     // variables to keep the counter for each operation
     unsigned readPageCounter;
     unsigned writePageCounter;
     unsigned appendPageCounter;
-    
+
     FileHandle();                                                         // Default constructor
     ~FileHandle();                                                        // Destructor
 
@@ -46,7 +53,16 @@ public:
     RC writePage(PageNum pageNum, const void *data);                      // Write a specific page
     RC appendPage(const void *data);                                      // Append a specific page
     unsigned getNumberOfPages();                                          // Get the number of pages in the file
-    RC collectCounterValues(unsigned &readPageCount, unsigned &writePageCount, unsigned &appendPageCount);  // Put the current counter values into variables
-}; 
+    RC collectCounterValues(unsigned &readPageCount, unsigned &writePageCount,
+                            unsigned &appendPageCount);  // Put the current counter values into variables
+    RC loadFile(FILE *file);
+
+    bool isOpen();
+
+    RC closeFile();
+
+private:
+    FILE *_file;
+};
 
 #endif
