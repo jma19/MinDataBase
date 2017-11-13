@@ -154,16 +154,15 @@ int RecordBasedFileManager::getRecordLenAndFormatRecord(const vector<Attribute> 
             switch (recordDescriptor[i - 1].type) {
                 case TypeInt:
                 case TypeReal: {
-                    AttrLength attrLength = recordDescriptor[i - 1].length;
                     recordLen += sizeof(TypeReal);
                     pData += sizeof(TypeReal);
                     fieldOffset[i] = fieldOffset[i - 1] + sizeof(TypeReal);
                     break;
                 }
                 case TypeVarChar: {
-                    uint32_t length = *((const uint32_t *) pData); //pData first 32 bit value;
+                    int length = *((int *) pData); //pData first 32 bit value;
                     recordLen += length;
-                    pData += VARCHAR_OFFSET_LENGTH + length;
+                    pData += sizeof(int) + length;
                     fieldOffset[i] = fieldOffset[i - 1] + VARCHAR_OFFSET_LENGTH + length;
                     break;
                 }
@@ -172,7 +171,7 @@ int RecordBasedFileManager::getRecordLenAndFormatRecord(const vector<Attribute> 
             fieldOffset[i] = fieldOffset[i - 1];
         }
         if (flagMask == 0x01) {
-            flagMask = 0x08;
+            flagMask = 0x80;
             pFlag += 1;
         } else {
             flagMask = flagMask >> 1;
@@ -186,6 +185,7 @@ int RecordBasedFileManager::getRecordLenAndFormatRecord(const vector<Attribute> 
 
     memcpy((char *) newRecord + headerLen,
            (char *) data + nullsIndicatorLength, recordLen - headerLen);
+
     return recordLen;
 }
 
